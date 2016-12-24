@@ -5,24 +5,31 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run tests",
-    "watch": "watchify main.js -v -t babelify --outfile build.js & browser-sync start --server --files='index.html, build.js'",
-    "build": "browserify main.js --outfile build.js"
+    "watch": "watchify main.js -v -t babelify --presets [ latest ] --outfile build.js & browser-sync start --server --files='index.html, build.js'",
+    "build": "browserify  -t [ babelify --presets [latest] ] main.js --outfile build.js"
   },
   "keywords": [
     "cyclejs",
     "streams",
+    "rxjs",
+    "virtual dom",
     "xstream"
   ],
   "author": "epicallan.al@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "xstream": "^9.3.0",
-    "snabbdom": "^0.2.0"
+    "rxjs": "^5.0.2",
+    "snabbdom": "^0.5.4"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "babel-preset-latest": "^6.16.0",
     "babelify": "^7.3.0",
     "browser-sync": "^2.18.5",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.8.0",
     "watchify": "^3.8.0"
   }
 }
