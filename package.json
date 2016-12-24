@@ -1,0 +1,28 @@
+{
+  "name": "toy",
+  "version": "1.0.0",
+  "description": "toy version of cyclejs using xstream",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run tests",
+    "watch": "watchify main.js -v -t babelify --outfile build.js & browser-sync start --server --files='index.html, build.js'",
+    "build": "browserify main.js --outfile build.js"
+  },
+  "keywords": [
+    "cyclejs",
+    "streams",
+    "xstream"
+  ],
+  "author": "epicallan.al@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "xstream": "^9.3.0",
+    "snabbdom": "^0.2.0"
+  },
+  "devDependencies": {
+    "babel-preset-latest": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.18.5",
+    "watchify": "^3.8.0"
+  }
+}
