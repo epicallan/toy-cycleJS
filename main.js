@@ -12,16 +12,46 @@ function main(sources) {
     DOM: $clicks
         .startWith(null)
         .switchMap(() => Rx.Observable.timer(0, 1000)) // flatmap latest
-        .map(i => `Seconds elapsed ${i}`),
+        .map(i => (
+          {
+            tagName: 'H1',
+            children: [
+              {
+                tagName: 'span',
+                children: [
+                  `Seconds elapsed ${i}`
+                ]
+              }
+            ]
+          }
+        )),
     Log: Rx.Observable.timer(0, 2000).map(i => `seconds logged ${i}`)
   };
 }
 
-// DOM Drivers
-function DOMDrivers(text$) {
-  text$.subscribe(text => {
+// Effects (imperative)
+
+// Change DOMDriver to create HTML elements.
+
+function DOMDrivers(obj$) {
+  function createElement(obj) {
+    const element = document.createElement(obj.tagName);
+    obj.children
+     .filter(c => typeof c === 'object')
+     .map(createElement)
+     .forEach(c => element.appendChild(c));
+
+    obj.children
+     .filter(c => typeof c === 'string')
+     .forEach(c => element.innerHTML += c);
+    return element;
+  }
+
+  obj$.subscribe(obj => {
     const container = document.querySelector('#app');
-    container.textContent = text;
+    container.innerHTML = '';
+    const element = createElement(obj);
+    container.appendChild(element);
   });
   // add an output from the driver (reading from the DOM)
   const DOMSource = Rx.Observable.fromEvent(document, 'click');
